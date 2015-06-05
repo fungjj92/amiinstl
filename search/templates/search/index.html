@@ -1,10 +1,56 @@
+{%  load staticfiles %}
+
 <!DOCTYPE html>
 <html>
 <head lang="en">
+
     <meta charset="UTF-8">
-    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="../../../static/css/normalize.css">
+    <link rel="stylesheet" href="../../../static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../static/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.9/mapbox.css'
+          rel='stylesheet'/>
+    <link rel="stylesheet" href="../../../static/css/style.css">
+
+    <link rel="munis" type="application/json" href="../../../static/Json/STLMunis.json">
+    <link rel="wards" type="application/json" href="../../../static/Json/STLWards.json">
+    <link rel="hoods" type="application/json" href="../../../static/Json/STLHoods2013.json">
+
+    <script type="text/javascript" src="../../../static/js/jquery-1.11.3.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
+    <script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.9/mapbox.js'></script>
+    <script type="text/javascript" src="../../../static/js/jq.js"></script>
+
+    <title>Where Am I in STL?</title>
 </head>
 <body>
+<article class="sidebar">
+    <section id="title">
+        <h1>Where Am I in STL?</h1>
+        <aside>Find municipality or ward information by location</aside>
+    </section>
+    <section class="geoform">
+        <p>
+            <form id="geoform">
+            Enter a street address
+            <input id="address" type="text" name="address" placeholder="i.e. 6040 Kingsbury Ave 63115">
+            <input type="submit" value="Submit" class="btn btn-success">
+            <br>-or-<br>
+            <input type="button" id="geoID" class="btn btn-warning" value="Find Me!">
+            </form>
+        </p>
 
+    </section>
+</article>
+    <!-- Eventually: pop up window with the info-->
+<article class="map">
+    <div id="map"></div>
+</article>
 </body>
 </html>

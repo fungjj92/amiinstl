@@ -1,0 +1,52 @@
+@font-face {
+    font-family: Ostrich Sans;
+    font-weight: normal;
+    src: url('/static/fonts/ostrich-sans-master/OstrichSans-Black.otf')
+}
+
+body {
+    font-size: 62.5%;
+    font-family: Arial, sans-serif;
+    background-color: transparent;
+}
+
+.sidebar {
+    font-size: 3em;
+    text-align: center;
+    display: inline-block;
+    width: 25%;
+    padding-left: 1em;
+}
+
+aside {
+   font-size: .75em;
+}
+
+section.geoform {
+    font-family: Ostrich Sans, Arial, sans-serif;
+    margin-top: 1em;
+    padding-top: 1em;
+    border-top: black solid 4px;
+}
+
+input {
+    margin: .5em 0em;
+}
+
+#title h1{
+    font-family: Ostrich Sans, Arial, sans-serif;
+    font-size: 2.5em;
+}
+
+.map{
+    display: inline-block;
+    width:75%;
+}
+
+#map {
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    position: absolute;
+    left: 23em;
+}
