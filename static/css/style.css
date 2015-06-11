@@ -38,15 +38,11 @@ input {
     font-size: 2.5em;
 }
 
-.map{
-    display: inline-block;
-    width:75%;
-}
-
 #map {
     top: 0;
     bottom: 0;
-    width: 100%;
+    width: 75%;
     position: absolute;
     left: 23em;
+    margin: 0;
 }
