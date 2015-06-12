@@ -195,7 +195,10 @@ function loadJsons(map) {
 }
 
 
-function addMarker(lat, long, map){
+function addMarker(lat, long, map, name){
+    if(name === undefined){
+        name = 'Searched location';
+    }
     L.mapbox.featureLayer({
         type: 'Feature',
         geometry: {
@@ -203,8 +206,8 @@ function addMarker(lat, long, map){
             coordinates: [long, lat]
         },
         properties: {
-            title: 'name here later',
-            description: 'dummy data',
+            title: name,
+            description: 'For now, click the space around me for the data you seek!',
             'marker-color': '#e5be01',
             'marker-size': 'medium',
         }
@@ -232,23 +235,27 @@ $(document).ready(function() {
 
     //Listen for submitted address. Grab lat/lon data and store.
     $(".leaflet-control-mapbox-geocoder-form").submit(function () {
+        var lat, lon, name;
         var input = $(".leaflet-control-mapbox-geocoder-form :input").val();
-        //AJAX to db to store address
-        $.post(
-            '/search/new',
-            {'address': input}
-        )
-            //todo: fix, doesn't make it inside here
+        geocoderControl.on('found', function(object){
+            var json = object.results.features[0];
+            console.log(json);
+            lat= json.geometry.coordinates[1];
+            lon= json.geometry.coordinates[0];
+            name = json.place_name;
+            addMarker(lat, lon, map, name);
+
+            //AJAX to db to store address and coordinates
+            $.post(
+                '/search/new',
+                {'address': input, 'latitude': lat, 'longitude': lon, 'fullname': name}
+            )
             .done(function () {
-                geocoderControl.on('found', function(object){
-                    var json = JSON.stringify(object.results.features[0]);
-                    var lat= json.geometry.coordinates[1];
-                    var lon= json.geometry.coordinates[0];
-                    addMarker(lat, lon, map);
-                 })
+                //todo perhaps put something more useful in here
             })
             .fail(function () {
                 console.log("Failed to find address entered :(")
             });
+        });
     })
 })

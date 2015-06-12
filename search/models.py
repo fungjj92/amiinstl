@@ -1,16 +1,15 @@
 from django.db import models
 
-#controller will figure out how to deal with userinputs
-#view asks models for data it needs
-#model will have to get stuff from DB to feed to leaflet in form
+#Deal with user inputs (Address, geoLocation)
+#View asks models for data it needs
 
-#model for getting geolocation info from address or button click
-
-#maybe collect usage info
-
+#Model will have to get stuff from DB to feed to leaflet in form
 
 class Address(models.Model):
-    address = models.CharField(max_length=100)
+    search = models.CharField(max_length=100, default="no input")
+    latitude = models.CharField(max_length=15, default="not found")
+    longitude = models.CharField(max_length=15, default="not found")
+    address = models.CharField(max_length=200)
 
 
 class geoLocation(models.Model):

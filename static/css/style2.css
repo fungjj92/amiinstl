@@ -80,7 +80,7 @@ section.geoform {
     }
 }
 
-@media screen and (max-width: 350px) {
+@media screen and (max-width: 372px) {
 
     .sidebar{
         font-size: 2.5em;

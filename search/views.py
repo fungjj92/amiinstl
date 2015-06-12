@@ -12,9 +12,12 @@ def index(request):
 def newSearch(request):
     #handle address from user input
     if request.method == 'POST':
-        address = request.POST.get('address')
-        createAddress = Address.objects.create(address=address)
-    return JsonResponse({'id': createAddress.id, 'address': createAddress.address})
+        search = request.POST.get('address')
+        lat = request.POST.get('latitude')
+        lon = request.POST.get('longitude')
+        address = request.POST.get('fullname')
+        createAddress = Address.objects.create(search=search, latitude=lat, longitude=lon, address=address)
+    return JsonResponse({'id': createAddress.id, 'search': createAddress.search, 'latitude': createAddress.latitude, 'longitude': createAddress.longitude, 'address': createAddress.address})
 
 
 @csrf_exempt
