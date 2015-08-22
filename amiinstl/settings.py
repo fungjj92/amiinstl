@@ -28,7 +28,7 @@ SECRET_KEY = '^*5q-riy5q-%95qj0fc9i9%t9-lnjz1p=ajsb2w-f37+@w7at5'
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
+LOGGING_CONFIG = None
 
 # Application definition
 
