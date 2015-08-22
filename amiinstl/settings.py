@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+# Parse database configuration from $DATABASE_URL
+import dj_database_url
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -26,7 +28,7 @@ SECRET_KEY = '^*5q-riy5q-%95qj0fc9i9%t9-lnjz1p=ajsb2w-f37+@w7at5'
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
+LOGGING_CONFIG = None
 
 # Application definition
 
@@ -48,7 +50,6 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.middleware.security.SecurityMiddleware',
 )
 
 ROOT_URLCONF = 'amiinstl.urls'
@@ -75,21 +76,8 @@ WSGI_APPLICATION = 'amiinstl.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'NAME': 'AmIInSTL',
-        'ENGINE': 'django.db.backends.mysql',
-        'USER': 'jfung',
-        'PASSWORD': 'civicdataftw',
-        'HOST': '',
-        'PORT': '',
-    }
-
-   # {
-   #     'ENGINE': 'django.db.backends.sqlite3',
-   #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-   # }
-}
+DATABASES = {}
+DATABASES['default'] =  dj_database_url.config()
 
 
 # Internationalization
@@ -105,6 +93,14 @@ USE_L10N = True
 
 USE_TZ = True
 
+# Honor the 'X-Forwarded-Proto' header for request.is_secure()
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+# Allow all host headers
+ALLOWED_HOSTS = ['*']
+
+# Static asset configuration
+STATIC_ROOT = 'staticfiles'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
