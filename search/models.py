@@ -7,12 +7,12 @@ from django.db import models
 
 class Address(models.Model):
     search = models.CharField(max_length=100, default="no input")
-    latitude = models.CharField(max_length=15, default="not found")
-    longitude = models.CharField(max_length=15, default="not found")
+    latitude = models.CharField(max_length=25, default="not found")
+    longitude = models.CharField(max_length=25, default="not found")
     address = models.CharField(max_length=200)
 
 
 class geoLocation(models.Model):
-    latitude = models.CharField(max_length=15)
-    longitude = models.CharField(max_length=15)
+    latitude = models.CharField(max_length=25)
+    longitude = models.CharField(max_length=25)
 
