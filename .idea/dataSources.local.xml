@@ -1,14 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="dataSourceStorageLocal">
-    <data-source name="SQLite -" uuid="e171f75e-b4cd-486b-b255-02bc51f3279a">
-      <secret-storage>master_key</secret-storage>
-    </data-source>
-    <data-source name="MySQL - AmIInSTL@localhost" uuid="8fc3838d-4e25-4cfb-96c2-b1bbdaa7d2ff">
-      <secret-storage>master_key</secret-storage>
-      <user-name>jfung</user-name>
-      <schema-pattern>AmIInSTL.*</schema-pattern>
-      <default-schemas>AmIInSTL.*</default-schemas>
-    </data-source>
+    <data-source name="SQLite -" uuid="e171f75e-b4cd-486b-b255-02bc51f3279a" />
+    <data-source name="MySQL - AmIInSTL@localhost" uuid="8fc3838d-4e25-4cfb-96c2-b1bbdaa7d2ff" />
   </component>
 </project>

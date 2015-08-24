@@ -38,11 +38,12 @@ function initmap(map) {
     function showPosition(position) {
         var lat = position.coords.latitude;
         var lon = position.coords.longitude;
-        //Store coordinates in DB
+        //Store coordinates in database
         storeCoordinates(lat, lon);
+        //Perform a GPS search, returning a location marker and map zoom
         map.locate({setView: true});
         map.on('locationfound', function (e) {
-            //todo add point in polygon search and update marker description
+            //todo: commented out below, add point in polygon search and update marker on-click window descriptions
             $.getJSON($('link[rel="alljson"]').attr("href"), function (data) {
                 /*var json = [data];
                  var pip = leafletPip.pointInLayer(
@@ -52,23 +53,29 @@ function initmap(map) {
                  }
                  }); */
                 addMarker(lat, lon, map);
+                //move map center to zoom around the new marker
                 map.fitBounds(e.bounds, {maxZoom: 15});
                 $('#geoID').prop('value', 'Find Me!');
             });
+            //Catch location-not-found errors. Calls locationErr function.
             map.on('locationerror', locationErr);
         })
     }
 
+    //Function alerts app user with details of the search error
      function locationErr(error) {
          alert("Unable to retrieve your location due to " + error.code + ": " + error.message);
      }
 
-    //Add geolocation ability to map when "Find Me!" button clicked
+    //Adds geolocation ability to map when "Find Me!" button clicked
     $('#geoID').on('click', function(){
+        //change button text to signify searching state
         $(this).prop('value', 'Searching...');
+        //handles successful location search and error cases
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(showPosition, locationErr);
         } else {
+        //handles other case of web browser not supporting geolocation service
             alert("Geolocation is not supported by this browser.");
         }
     })
@@ -76,12 +83,12 @@ function initmap(map) {
 }
 
 function loadJsons(map) {
-    //Universal JSON functions here
+    //Any reused JSON functions put here
     function zoomToFeature(e) {
         map.fitBounds(e.target.getBounds());
     }
 
-    //load municipality Json
+    //load Municipality JSON
     $.getJSON($('link[rel="munis"]').attr("href"), function (data) {
         //Set highlight functions
         function highlightFeature(e) {
@@ -113,7 +120,7 @@ function loadJsons(map) {
      munis.addTo(map);
     });
 
-    //Ward JSON
+    //load Ward JSON
      $.getJSON($('link[rel="wards"]').attr("href"), function(data){
          function highlightFeature(e){
             e.target.setStyle({color:'#691F01'});
@@ -125,6 +132,7 @@ function loadJsons(map) {
             style: function (feature) {
                 return {color:"#FF7F50", weight:1.5};
             },
+             //Display data in on-click marker window
              onEachFeature: function(feature, layer) {
                  var windowText = '<strong>Ward Name: </strong>' + feature.properties.WARD10 +
                  '</br><a href="https://www.stlouis-mo.gov/government/departments/aldermen/ward-'+ feature.properties.WARD10 + '">STL City Ward Site</a>';
@@ -140,10 +148,7 @@ function loadJsons(map) {
          wards.addTo(map);
      });
 
-
-        /*
-
-        // 1 doc compilation of geojsons. Matter of data organization and structuring
+    /***************~~~~ Playing around with one JQuery call that loads all JSONs ~~~~****************************
         $.getJSON($('link[rel="alljson"]').attr("href"), function (data) {
             function highlightFeature(e) {
                 e.target.setStyle({color: '#691F01'});
@@ -195,10 +200,11 @@ function loadJsons(map) {
 }
 
 
-function addMarker(lat, long, map, name){
-    if(name === undefined){
-        name = 'Searched location';
+function addMarker(lat, long, map, placeName){
+    if(placeName === undefined){
+        placeName = 'Searched location';
     }
+    //create a Mapbox point feature using lat long data
     L.mapbox.featureLayer({
         type: 'Feature',
         geometry: {
@@ -206,7 +212,7 @@ function addMarker(lat, long, map, name){
             coordinates: [long, lat]
         },
         properties: {
-            title: name,
+            title: placeName,
             description: 'For now, click the space around me for the data you seek!',
             'marker-color': '#e5be01',
             'marker-size': 'medium',
@@ -223,12 +229,13 @@ $(document).ready(function() {
     var map = L.mapbox.map('map', 'mapbox.streets').setView([38.646899, -90.337648], 10);
 
     var geocoderControl = L.mapbox.geocoderControl('mapbox.places');
-    //explore what info/data is here via breakpoint
+    //todo: explore what info/data is returned in this call using a breakpoint
     geocoderControl.addTo(map);
 
     //Initialize map features
     $("#map").append(initmap(map));
-    //Enter Street Address button clicked
+
+    //'Enter Street Address' button clicked
     $("#enteraddress").click(function () {
         $(".leaflet-control-mapbox-geocoder").toggleClass("active").find("input").focus();
     });
@@ -242,16 +249,16 @@ $(document).ready(function() {
             console.log(json);
             lat= json.geometry.coordinates[1];
             lon= json.geometry.coordinates[0];
-            name = json.place_name;
-            addMarker(lat, lon, map, name);
+            placeName = json.place_name;
+            addMarker(lat, lon, map, placeName);
 
             //AJAX to db to store address and coordinates
             $.post(
                 '/search/new',
-                {'address': input, 'latitude': lat, 'longitude': lon, 'fullname': name}
+                {'address': input, 'latitude': lat, 'longitude': lon, 'fullname': placeName}
             )
             .done(function () {
-                //todo perhaps put something more useful in here
+                //todo: perhaps put something more useful in here
             })
             .fail(function () {
                 console.log("Failed to find address entered :(")
