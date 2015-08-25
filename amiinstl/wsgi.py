@@ -17,5 +17,3 @@ application = Cling(get_wsgi_application())
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "amiinstl.settings")
 
 application = Cling(get_wsgi_application())
-
-)
