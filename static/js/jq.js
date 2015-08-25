@@ -134,8 +134,8 @@ function loadJsons(map) {
             },
              //Display data in on-click marker window
              onEachFeature: function(feature, layer) {
-                 var windowText = '<strong>Ward Name: </strong>' + feature.properties.WARD10 +
-                 '</br><a href="https://www.stlouis-mo.gov/government/departments/aldermen/ward-'+ feature.properties.WARD10 + '">STL City Ward Site</a>';
+                 var windowText = '<strong>Ward Name: </strong>' + feature.properties.WARD +
+                 '</br><a href="https://www.stlouis-mo.gov/government/departments/aldermen/ward-'+ feature.properties.WARD + '">STL City Ward Site</a>';
                  //todo: '</br>More info to come...';
                  layer.on({
                  mouseover: highlightFeature,
